@@ -1,22 +1,13 @@
-# Xtra Hands Bid Triage System
+# Xtra Hands Bid Triage
 
-Procurement intelligence for Capital Region NY government contracting.
+Demo-first. Writes `data/triage_YYYY-MM-DD.json`.
 
-**Two-rail system:**
-- **Rail A**: RFP / bid scraping engine
-- **Rail B**: HD Pro VPP material cost estimation + margin triage (GO / MARGINAL / NO-GO)
-
-## Setup
 ```bash
-cd xtra-hands-bid-triage
-pip install -r requirements.txt
-python scripts/bid_triage.py
+cd /root/xtra-hands-bid-triage
+git pull
+python3 scripts/bid_triage.py          # four demo bids, no network
+python3 scripts/bid_triage.py --live   # stub hits public pages, falls back
+
+cd /root/xtra-hands-ledger
+python3 watch_bids.py
 ```
-
-## Structure
-- `scripts/` — Core Python tools
-- `data/` — Generated triage reports
-- `docs/` — Documentation
-- `attachments/` — Supporting files (quote calculator, pre-dig reports)
-
-See `docs/CONTEXT.md` for full details.
