@@ -99,10 +99,63 @@ def scrape_live():
     out = []
     for name, url in SOURCES.items():
         try:
-            r = requests.get(url, headers={"User-Agent": "XtraHands-BidTriage/demo"}, timeout=10)
-            BeautifulSoup(r.text, "html.parser")
-            out.append({"title": f"LIVE STUB {name}", "url": url + "#live", "source": name, "type": "product",
-                        "category": "lumber", "bid_ceiling": 15000, "vpp_assumed": 10000, "labor_equip": 5000, "surplus": "unknown"})
+            r = requests.get(url, headers={"User-Agent": "XtraHands-BidTriage/1.0"}, timeout=15)
+            r.raise_for_status()
+            soup = BeautifulSoup(r.text, "html.parser")
+            if name == "albany_city":
+                # Parse CivicEngage bid list
+                rows = soup.select("div.listItemsRow.bid")
+                for row in rows:
+                    title_a = row.select_one("div.bidTitle a")
+                    if not title_a:
+                        continue
+                    title = title_a.get_text(strip=True)
+                    href = title_a.get("href", "")
+                    full_url = url.split("?")[0].rsplit("/", 1)[0] + "/" + href if href.startswith("bids.aspx") else url
+                    status_div = row.select_one("div.bidStatus")
+                    closes = "unknown"
+                    status = "Open"
+                    if status_div:
+                        spans = status_div.find_all("span")
+                        for i, sp in enumerate(spans):
+                            if "Closes:" in sp.get_text() and i + 1 < len(spans):
+                                # next sibling block has the date
+                                pass
+                        # simpler: get all text
+                        text = status_div.get_text(" ", strip=True)
+                        if "Open" in text:
+                            status = "Open"
+                        # extract date-like
+                        import re
+                        m = re.search(r"(\d{1,2}/\d{1,2}/\d{4}.*?PM|AM)", text)
+                        if m:
+                            closes = m.group(1)
+                    out.append({
+                        "title": title,
+                        "url": full_url,
+                        "source": name,
+                        "type": "job" if any(k in title.lower() for k in ["snow", "tree", "sidewalk", "demo", "transfer"]) else "product",
+                        "category": "excavation" if any(k in title.lower() for k in ["snow", "transfer", "demo"]) else "lumber",
+                        "bid_ceiling": 25000,  # placeholder until spec
+                        "vpp_assumed": 12000,
+                        "labor_equip": 6000,
+                        "surplus": "possible fill/debris" if "demo" in title.lower() or "transfer" in title.lower() else "unknown",
+                        "closes": closes,
+                        "status": status,
+                    })
+            else:
+                # stub for other sources until parser written
+                out.append({
+                    "title": f"LIVE STUB {name} (parser pending)",
+                    "url": url,
+                    "source": name,
+                    "type": "product",
+                    "category": "lumber",
+                    "bid_ceiling": 15000,
+                    "vpp_assumed": 10000,
+                    "labor_equip": 5000,
+                    "surplus": "unknown",
+                })
         except Exception as e:
             print("scrape fail", name, e)
     return out
