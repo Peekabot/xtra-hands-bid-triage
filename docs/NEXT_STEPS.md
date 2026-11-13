@@ -1,6 +1,17 @@
 # Xtra Hands — Smallest Actionable Steps
 
+**Updated: 2026-11-13**
+
 Current state: demo-first triage with stub live scraper. Ledger ingest works. Next priority is real VPP quotes and one live bid.
+
+## Live Albany bids as of 2026-11-13 (from https://www.albanyny.gov/Bids.aspx)
+
+- City of Albany Transfer Station — closes 11/17/2026 11:59 PM
+- Snow Management Services - ZONE E — closes 11/17/2026 11:59 PM
+- Street Tree Planting Program — closes 12/8/2026 11:59 PM
+- RFP 2025-15 Purchase of 96 4th St Bath house NO.2 — closes 11/27/2026 2:00 PM
+
+Note: Viewing full specs/PDFs requires submitting a Plan Holders Form (company name, contact, phone, email).
 
 ## Immediate (today / next 30 min)
 
@@ -14,14 +25,19 @@ Current state: demo-first triage with stub live scraper. Ledger ingest works. Ne
 
 2. **Check one current Albany bid page**
    - Open https://www.albanyny.gov/Bids.aspx
-   - Note open bids: Snow Management Services - ZONE E (closes 11/17/2026), Street Tree Planting Program (closes 12/8/2026)
-   - Click into Snow Management or Tree Planting and download the PDF/spec if available
+   - Note open bids above
+   - Click into Snow Management or Tree Planting and submit Plan Holders Form to access PDF/spec
    - Save PDF locally as `data/specs/`
 
 3. **Pick the sidewalk restoration demo as first real test**
    - From DEMO in scripts/bid_triage.py: City of Albany sidewalk restoration, Ward 6
    - Or use real quantities from 2026 Contract 1 (DocumentCenter/View/13942) — temporary sidewalk restoration, concrete sidewalks
-   - Build a 5-line material list (concrete, rebar, forms, gravel, etc.)
+   - Sample 5-line material list (see data/sidewalk_material_list.md):
+     - Ready-mix concrete (4000 psi)
+     - #4 rebar
+     - Form lumber / stakes
+     - Gravel base / crushed stone
+     - Expansion joint material / sealant
 
 ## Next (this week)
 
