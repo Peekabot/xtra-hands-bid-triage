@@ -1,26 +1,25 @@
 # Xtra Hands — Smallest Actionable Steps
 
-**Updated: 2026-11-14 (live scrape confirmed)**
+**Updated: 2026-11-18 (post-close check)**
 
-Current state: Albany live parser works (4 open bids parsed correctly). Demo pack + sidewalk material list ready. Ledger ingest ready. Priority: lock one real cost + decide on imminent close dates.
+Current state: Albany live parser works. Monday-closing bids (Transfer Station, Snow ZONE E) have closed. Demo pack + sidewalk material list ready. Ledger ingest ready. Priority: evaluate Street Tree Planting + lock one real cost.
 
-## Live Albany bids (confirmed 2026-11-14 via https://www.albanyny.gov/Bids.aspx)
+## Live Albany bids (confirmed 2026-11-18 via https://www.albanyny.gov/Bids.aspx)
 
 | Bid | Closes | Fit for XtraHands? | Notes |
 |-----|--------|--------------------|-------|
-| City of Albany Transfer Station | 11/17/2026 11:59 PM | Possible (site/materials) | Needs Plan Holders Form for PDF |
-| Snow Management Services - ZONE E | 11/17/2026 11:59 PM | Low (seasonal service) | Closes Monday |
-| Street Tree Planting Program | 12/8/2026 11:59 PM | Possible (site prep) | More time |
+| Street Tree Planting Program | 12/8/2026 11:59 PM | Possible (site prep / planting) | Requires Plan Holders Form for PDF (bidID=782) |
 | RFP 2025-15 Purchase of 96 4th St Bath house NO.2 | 11/27/2026 2:00 PM | Low (property purchase) | — |
+| RFP 2026-18 Comprehensive Plan Update Services | 12/18/2026 2:00 PM | Low (consulting) | — |
 
 Note: Full specs require Plan Holders Form (company name, contact, phone, email).
 
 ## Immediate (next 15–30 min)
 
-1. **Decide on the two Monday-closing bids**
-   - Open each: Transfer Station (bids.aspx?bidID=780) and Snow ZONE E (bids.aspx?bidID=783)
-   - Submit Plan Holders Form if you want the PDF
-   - Quick GO/NO-GO: does it match site prep / demo / handyman + surplus potential?
+1. **Evaluate Street Tree Planting Program**
+   - Open: https://www.albanyny.gov/bids.aspx?bidID=782
+   - Submit Plan Holders Form if you want the full PDF/spec
+   - Quick GO/NO-GO: does it match site prep / handyman + any surplus potential? (planting is labor-heavy, materials may be trees/supplies)
 
 2. **Lock one material cost (sidewalk path still valid)**
    - Use `data/sidewalk_material_list.md` (or any real quantities from a spec)
@@ -36,7 +35,8 @@ Note: Full specs require Plan Holders Form (company name, contact, phone, email)
 
 4. Update `VPP_DISCOUNT` / `vpp_assumed` with the real Pro Desk number
 5. Ingest triage JSON into ledger (`watch_bids.py` in xtra-hands-ledger)
-6. For any surplus-heavy lead, note it for surplus-capture skill
+6. Check Schenectady open bids (RFB-2026-31 Technical Rescue, RFB-2026-30 Waste Removal) for any site/surplus fit
+7. For any surplus-heavy lead, note it for surplus-capture skill
 
 ## Constants to tune after real quote
 - VPP_DISCOUNT
